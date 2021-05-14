@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Github </title>
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        #image{
+    border: 5px solid rgb(41, 156, 18);
+    padding: 0;
+}
+    </style>
+    </head>
+
+    <link rel="manifest" href="manifest.json">
+    <body>
+    </br></br>
+      <center><h1 class="display-2">Github Profile</h1><br>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control" id="text_input" placeholder="Enter a Github UserID">
+              </div>
+        <button type="button" class="btn btn-success" onclick="gitdata()" value="get profile">Fetch</button>
+        <br>
+        <br>
+        <center><div id='git_image'>
+            
+            <img src=""  class="figure-img img-fluid rounded" alt  alt="profile image" id="image"><br><br>
+            <h4><label>Profile Details Fetched in json</label></h4>
+            
+
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" >Key</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Login Name</th>
+                    <td id="login"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Followers</th>
+                    <td id="follow"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Following</th>
+                    <td id="following"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Html Url</th>
+                    <td id="s_url"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Updated At</th>
+                    <td id="update"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Followers_Url</th>
+                    <td id="foll"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Repository_Url</th>
+                    <td id="rfoll"></td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">Organization_Url</th>
+                    <td id="admin"></td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+     
+       
+           
+        </div></center>
+
+        <br><br><br>
+        <h6>Raw data</h6>
+        <p id='para'></p>
+    </body>
+<script>
+    function gitdata(){
+
+    var url='https://api.github.com/users/'+document.getElementById('text_input').value;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.avatar_url)
+        var im = document.getElementById("image");
+        im.setAttribute("src",data.avatar_url);
+        
+        var gi= document.getElementById('para');
+        gi.innerHTML=JSON.stringify(data);
+
+        var lg= document.getElementById('login');
+        lg.innerHTML=JSON.stringify(data.login);
+
+
+        var url= document.getElementById('s_url');
+        url.innerHTML=JSON.stringify(data.html_url);
+              
+        var l= document.getElementById('login');
+        l.innerHTML=JSON.stringify(data.login);
+
+        var foll= document.getElementById('foll');
+        foll.innerHTML=JSON.stringify(data.followers_url);
+
+        var rfoll= document.getElementById('rfoll');
+        rfoll.innerHTML=JSON.stringify(data.repos_url);
+        
+
+        var ua= document.getElementById('update');
+        ua.innerHTML=JSON.stringify(data.updated_at);
+
+        var fw= document.getElementById('follow');
+        fw.innerHTML=JSON.stringify(data.followers);
+        
+        var fwng= document.getElementById('following');
+        fwng.innerHTML=JSON.stringify(data.following);
+        
+        var ad= document.getElementById('admin');
+        ad.innerHTML=JSON.stringify(data.organizations_url);
+
+    })
+
+    .catch(function(response){
+        return response.status;
+        console.log(response.status);
+    });;
+    
+}
+</script>
+<script>
+    if('serviceWorker' in navigator){
+        window.addEventListener('load',()=>{
+            navigator.serviceWorker.register('sw.js')
+        .then(registration =>{
+            console.log('service worker is registered',registration);
+        })
+        .catch(err =>{
+            console.log('Registration failed',err);
+        })
+        })
+    }
+</script>
+
+<script>
+    if('serviceWorker' in navigator){
+        window.addEventListener('load',()=>{
+            navigator.serviceWorker.register('sw.js')
+        .then(registration =>{
+            console.log('service worker is registered',registration);
+        })
+        .catch(err =>{
+            console.log('Registration failed',err);
+        })
+        })
+    }
+</script>
+<script src="main.js"></script>
+</body>
+</html>
